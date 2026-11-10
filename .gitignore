@@ -1,0 +1,12 @@
+node_modules/
+.upstream/
+dist/
+artifacts/
+*.vsix
+*.log
+.npmrc
+.env
+.env.*
+*.token
+*-token.txt
+.DS_Store
