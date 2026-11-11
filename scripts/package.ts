@@ -1,0 +1,10 @@
+import {mkdir} from 'node:fs/promises';
+import {resolve} from 'node:path';
+const platform = `${process.platform}-${process.arch}`;
+if (!['win32-x64', 'linux-x64', 'linux-arm64', 'darwin-x64', 'darwin-arm64'].includes(platform)) throw new Error(`Неподдерживаемая платформа: ${platform}`);
+await mkdir('artifacts', {recursive: true});
+const {version} = await Bun.file('extension/package.json').json();
+const packagePath = resolve(`artifacts/tui-monkey-${platform}-${version}.vsix`);
+const proc = Bun.spawn(['bun', 'x', '--no-install', 'vsce', 'package', '--no-dependencies', '--skip-license', '--target', platform, '--out', packagePath], {cwd: resolve('extension'), stdout: 'inherit', stderr: 'inherit'});
+if (await proc.exited !== 0) throw new Error('Упаковка расширения завершилась ошибкой.');
+console.log(packagePath);

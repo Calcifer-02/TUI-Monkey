@@ -1,0 +1,37 @@
+{
+  "name": "tui-monkey",
+  "displayName": "TUI Monkey",
+  "description": "Typing practice in the terminal, with session history and an animated monkey.",
+  "version": "0.1.1",
+  "publisher": "Calcifer-02",
+  "license": "UNLICENSED",
+  "repository": {"type": "git", "url": "https://github.com/Calcifer-02/TUI-Monkey.git"},
+  "homepage": "https://github.com/Calcifer-02/TUI-Monkey#readme",
+  "bugs": {"url": "https://github.com/Calcifer-02/TUI-Monkey/issues"},
+  "engines": {"vscode": "^1.96.0"},
+  "categories": ["Other", "Education"],
+  "keywords": ["typing", "terminal", "monkey", "wpm", "practice"],
+  "main": "./dist/extension.cjs",
+  "icon": "media/icon.png",
+  "galleryBanner": {"color": "#11110e", "theme": "dark"},
+  "extensionKind": ["workspace"],
+  "activationEvents": ["onStartupFinished"],
+  "capabilities": {"untrustedWorkspaces": {"supported": true}, "virtualWorkspaces": {"supported": false}},
+  "contributes": {
+    "commands": [
+      {"command": "tuiMonkey.start", "title": "TUI Monkey: Start Typing", "icon": "$(play)"},
+      {"command": "tuiMonkey.selection", "title": "TUI Monkey: Practice Selected Text", "icon": "$(edit)"},
+      {"command": "tuiMonkey.history", "title": "TUI Monkey: Show History", "icon": "$(history)"}
+    ],
+    "menus": {"editor/context": [{"command": "tuiMonkey.selection", "when": "editorHasSelection", "group": "navigation@99"}]},
+    "configuration": {
+      "title": "TUI Monkey",
+      "properties": {
+        "tuiMonkey.language": {"type": "string", "default": "english200", "description": "Default typing dictionary, e.g. russian, english200, go, javascript."},
+        "tuiMonkey.words": {"type": "number", "default": 25, "minimum": 1, "maximum": 1000, "description": "Number of words per practice."},
+        "tuiMonkey.displayName": {"type": "string", "default": "", "scope": "machine", "description": "Greeting name. Empty uses your VS Code GitHub account, Git name, or computer username."},
+        "tuiMonkey.showStatusBar": {"type": "boolean", "default": true, "description": "Show the typing practice shortcut in the status bar."}
+      }
+    }
+  }
+}

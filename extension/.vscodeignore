@@ -1,0 +1,5 @@
+src/**
+**/*.map
+**/*.ts
+.vscode/**
+node_modules/**
