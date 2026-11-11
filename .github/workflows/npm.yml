@@ -1,0 +1,27 @@
+name: npm package
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.12
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+          cache: false
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - run: bun run build:engine
+      - run: bun run test
+      - run: bun run build:npm
+      - run: bun run pack:npm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tui-monkey-npm
+          path: artifacts/*.tgz
