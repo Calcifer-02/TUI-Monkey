@@ -1,0 +1,44 @@
+@startuml architecture-c4
+!$STEREOTYPE_FONT_SIZE = 18
+!$TECHN_FONT_SIZE = 20
+!$ARROW_FONT_SIZE = 20
+!include <C4/C4_Container>
+
+LAYOUT_LEFT_RIGHT()
+UpdateElementStyle("person", $bgColor="white", $fontColor="black", $borderColor="black")
+UpdateElementStyle("container", $bgColor="white", $fontColor="black", $borderColor="black")
+UpdateRelStyle($textColor="black", $lineColor="black")
+UpdateSystemBoundaryStyle($bgColor="white", $fontColor="black", $borderColor="black")
+
+skinparam backgroundColor white
+skinparam defaultFontName Segoe UI
+skinparam defaultFontColor black
+skinparam defaultFontSize 22
+skinparam ArrowFontSize 20
+skinparam TitleFontSize 30
+skinparam LegendFontSize 18
+skinparam shadowing false
+skinparam nodesep 55
+skinparam ranksep 75
+
+title TUI Monkey — C4: контейнеры
+
+Person(user, "Пользователь")
+
+System_Boundary(system, "TUI Monkey") {
+    Container(extension, "Расширение\nVS Code", "TypeScript")
+    Container(ui, "Интерфейс", "React / Ink")
+    Container(engine, "Движок тренировок", "Go")
+    ContainerDb(history, "История", "JSON-файлы")
+}
+
+Rel(user, extension, "Запускает")
+Rel(extension, ui, "Запускает", "VS Code API")
+Rel(ui, engine, "Вызывает", "JSON Lines")
+Rel_R(ui, history, "Читает / пишет", "Файлы")
+Rel(user, ui, "Печатает")
+
+legend bottom right
+Пунктир — граница системы
+endlegend
+@enduml
